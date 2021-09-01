@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+  <!--NAVBAR -->
+  <nav class="navbar navbar-expand-lg justify-content-end p-1 shadow fixed-top" style="background-light">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+      LOGO
+      </a>
+          <ul class="nav navbar-nav flex-row">
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                    <%= link_to 'Cerrar Sesión', destroy_user_session_path, method: :delete, class: 'nav-link'%>
+                </li>
+
+            <% else %>
+              <li class="nav-item">
+                    <%= link_to 'Registro', new_user_registration_path, class: 'nav-link'%>
+                </li>
+                <li class="nav-item">
+                    <%= link_to 'Login', new_user_session_path, class: 'nav-link'%>
+                </li>
+            <% end %>
+          </ul>
+    </div>
+  </nav>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= yield %>
+  </body>
+</html>
