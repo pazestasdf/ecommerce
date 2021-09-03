@@ -35,6 +35,7 @@ gem 'dotenv-rails'
 gem 'rspec-rails'
 gem 'rails-controller-testing'
 gem 'shoulda-matchers'
+gem 'simplecov', require: false, group: :test
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

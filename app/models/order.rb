@@ -16,6 +16,25 @@ class Order < ApplicationRecord
     end
   end
 
+  def totalInCents
+    total * 100
+  end
+
+  def complete
+    update_attribute(:state, "completed")
+  end
+  
+  def create_payment(pm, tkn)
+    # payment_method = PaymentMethod.find_by(code: "PEC")
+    Payment.create(
+      order_id: self.id,
+      payment_method_id: PaymentMethod.find_by(code: pm).id,
+      state: "processing",
+      total: self.total,
+      token: tkn
+    )
+  end
+
   def random_candidate(size)
     "#{hash_prefix}#{Array.new(size){rand(size)}.join}"
   end
@@ -27,11 +46,11 @@ class Order < ApplicationRecord
   def hash_size
     9
   end
-
-  def add_product(product_id, quantity)
-    product = Product.find(product_id)
-    if product && (product.stock > 0)
-      order_items.create(product_id: product.id, quantity: quantity, price: product.price)
+  
+  def add_product(variant_id, quantity)
+    variant = Variant.find(variant_id)
+    if variant && (variant.stock > 0)
+      order_items.create(variant_id: variant.id, quantity: quantity, price: variant.product.price)
       compute_total
     end
   end
